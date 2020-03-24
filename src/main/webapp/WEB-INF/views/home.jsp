@@ -23,6 +23,6 @@
 </head>
 <body>
 	<h1>ZAWA by Make IT Possible</h1>
-	<p>Our journey starts here.</p>
+	<p>Our journey starts here!</p>
 </body>
 </html>
