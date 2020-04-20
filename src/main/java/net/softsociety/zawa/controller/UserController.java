@@ -30,4 +30,9 @@ public class UserController {
 	 * 계정을 신규 등록하는 쿼리를 보내어, id를 성공적으로 부여 받은 경우 등록 완료 페이지로 이동한다.
 	 * </p>
 	 */
+	@RequestMapping(value = "/createAccount", method = RequestMethod.POST)
+	public String createAccount() {
+		
+		return "redirect: /";
+	}
 }

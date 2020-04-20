@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.zawa.dao.UserMapper">
+    <!-- 계정 생성 -->
+    <insert id="createAccount">
+    </insert>
+
+    <!-- 이메일, 패스워드를 대조하여 로그인 처리 -->
+    <select id="signin">
+    </select>
+
+    <!-- 이메일 중복 확인 -->
+    <select id="findByEmail">
+    </select>
+</mapper>

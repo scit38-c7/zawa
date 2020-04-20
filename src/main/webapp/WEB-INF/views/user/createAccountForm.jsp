@@ -2,29 +2,25 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>ZAWA アカウント登録</title>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-	crossorigin="anonymous"></script>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+	<meta charset="UTF-8">
+	<title>ZAWA アカウント登録</title>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
 </head>
 <script>
-	$(function() {
+	$(function () {
 		var checked = false;
-		$("#userid").keyup(function() {
+		$("#userid").keyup(function () {
 			var userid = $("#userid").val();
 			if (userid.length > 10) {
 				var count = userid.substr(0, 10);
@@ -32,12 +28,12 @@
 			}
 
 			$.ajax({
-				type : 'get',
-				url : 'selectOne',
-				data : {
-					'userid' : userid
+				type: 'get',
+				url: 'selectOne',
+				data: {
+					'userid': userid
 				},
-				success : function(result) {
+				success: function (result) {
 					if (result == "no") {
 						checked = true;
 					} else {
@@ -45,13 +41,13 @@
 						return;
 					}
 				},
-				error : function(result) {
+				error: function (result) {
 					alert("에러 발생");
 				}
 			})
 		})
 
-		$("#userpw").keyup(function() {
+		$("#userpw").keyup(function () {
 			var userpw = $("#userpw").val();
 			if (userpw.length > 10) {
 				var count = userpw.substr(0, 10);
@@ -59,7 +55,7 @@
 			}
 		})
 
-		$("#nickname").keyup(function() {
+		$("#nickname").keyup(function () {
 			var nickname = $("#nickname").val();
 			if (nickname.length > 10) {
 				var count = nickname.substr(0, 10);
@@ -67,7 +63,7 @@
 			}
 		})
 
-		$("#join").click(function() {
+		$("#join").click(function () {
 			var userid = $("#userid").val();
 			if (userid.trim().length < 5) {
 				alert("아이디는 5자 이상으로 하세요");
@@ -101,16 +97,16 @@
 			}
 
 			var data = {
-				'userid' : userid,
-				'userpw' : userpw,
-				'nickname' : nickname
+				'userid': userid,
+				'userpw': userpw,
+				'nickname': nickname
 			}
 
 			$.ajax({
-				type : 'post',
-				url : 'join',
-				data : data,
-				success : function(result) {
+				type: 'post',
+				url: 'join',
+				data: data,
+				success: function (result) {
 					if (result == "ok") {
 						alert("가입 성공");
 						location.href = "main";
@@ -118,7 +114,7 @@
 						alert("가입 실패");
 					}
 				},
-				error : function(result) {
+				error: function (result) {
 					alert("에러 발생");
 				}
 			})
@@ -128,19 +124,29 @@
 </script>
 
 </head>
+
 <body>
-	아이디
-	<input type="text" id="userid">
-	<br />
-	비밀번호
-	<input type="password" id="userpw">
-	<br />
-	비밀번호 확인
-	<input type="password" id="userpw2">
-	<br />
-	닉네임
-	<input type="text" id="nickname">
-	<br />
-	<input type="button" value="등록" id="join">
+	<div id="signup-box" class="container">
+		<div class="row">
+			<div class="col-1 form-header">メールアドレス</div>
+			<div class="col-2"><input type="text" id="email"></div>
+			<div id="email-check" class="col"></div>
+		</div>
+		<div class="row">
+			<div class="col-1 form-header">パスワード</div>
+			<div class="col-2"><input type="password" id="pw"></div>
+			<div id="pw-check" class="col"></div>
+		</div>
+		<div class="row">
+			<div class="col-1 form-header">もう一度入力</div>
+			<div class="col-2"><input type="password" id="pw2"></div>
+			<div id="pw2-check" class="col"></div>
+		</div>
+		<div class="row">
+			<div class="col-2"><input type="button" id="join-btn" value="登録"></div>
+			<div class="col-2"><input type="button" id="prev-btn" value="戻る"></div>
+		</div>
+	</div>
 </body>
+
 </html>
