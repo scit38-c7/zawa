@@ -12,5 +12,6 @@ public class AccountVO {
 	private String email;
 	private String pwhash;
 	private String dob;
+	private String datecreated;
 	private int suspended;
 }

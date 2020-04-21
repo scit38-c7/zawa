@@ -24,6 +24,11 @@
 			});
 		});
 	</script>
+	<c:if test="${requestScope.signupSuccess == true}">
+		<script>
+			alert('アカウント登録に成功しました');
+		</script>
+	</c:if>
 </head>
 
 <body>
