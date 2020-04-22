@@ -83,7 +83,7 @@ public class UserController {
 	/**
 	 * 프로필 선택 화면
 	 */
-	@RequestMapping(value = "profiles", method = RequestMethod.POST)
+	@RequestMapping(value = "profiles", method = RequestMethod.GET)
 	public String profiles() {
 		return "user/selectProfile";
 	}
@@ -98,4 +98,11 @@ public class UserController {
 		return list;
 	}
 
+	/**
+	 * 프로필 생성 화면
+	 */
+	@RequestMapping(value = "profiles/create", method = RequestMethod.GET)
+	public String createProfileForm() {
+		return "user/createProfileForm";
+	}
 }
