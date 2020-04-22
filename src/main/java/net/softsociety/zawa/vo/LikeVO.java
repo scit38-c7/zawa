@@ -1,4 +1,4 @@
-package com.sesoc.report.vo;
+package net.softsociety.zawa.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LikeVO {
-
 	private int like_no;
 	private int post_no;
 	private String user_id;

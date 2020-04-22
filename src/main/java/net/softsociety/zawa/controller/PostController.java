@@ -1,4 +1,4 @@
-package com.sesoc.report.controller;
+package net.softsociety.zawa.controller;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.sesoc.report.dao.PageNavigator;
-import com.sesoc.report.dao.PostListDAO;
-import com.sesoc.report.vo.PostTagVO;
-import com.sesoc.report.vo.PostVO;
-import com.sesoc.report.vo.ReplyVO;
-import com.sesoc.report.vo.TagVO;
+import net.softsociety.zawa.dao.PageNavigator;
+import net.softsociety.zawa.dao.PostListDAO;
+import net.softsociety.zawa.vo.PostTagVO;
+import net.softsociety.zawa.vo.PostVO;
+import net.softsociety.zawa.vo.ReplyVO;
+import net.softsociety.zawa.vo.TagVO;
 
 @Controller
 public class PostController {

@@ -1,4 +1,4 @@
-package com.sesoc.report.vo;
+package net.softsociety.zawa.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

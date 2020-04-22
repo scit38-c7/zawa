@@ -46,4 +46,18 @@
 		from accounts
 		where email = #{email}
 	</select>
+
+	<!-- 계정이 보유한 프로필 불러오기 -->
+	<select id="getAccountProfiles" parameterType="int" resultType="ProfileVO">
+		select
+			id
+			,displayid
+			,name
+			,owner
+			,suspended
+			,isprivate
+			,thumbnail
+		from profiles
+		where owner = #{owner}
+	</select>
 </mapper>

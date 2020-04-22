@@ -1,4 +1,4 @@
-package com.sesoc.report.dao;
+package net.softsociety.zawa.dao;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,10 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.sesoc.report.vo.PostTagVO;
-import com.sesoc.report.vo.PostVO;
-import com.sesoc.report.vo.ReplyVO;
-import com.sesoc.report.vo.TagVO;
+import net.softsociety.zawa.vo.PostTagVO;
+import net.softsociety.zawa.vo.PostVO;
+import net.softsociety.zawa.vo.ReplyVO;
+import net.softsociety.zawa.vo.TagVO;
 
 @Repository
 public class PostListDAO {

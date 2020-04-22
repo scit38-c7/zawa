@@ -1,13 +1,13 @@
-package com.sesoc.report.dao;
+package net.softsociety.zawa.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.sesoc.report.vo.PostTagVO;
-import com.sesoc.report.vo.PostVO;
-import com.sesoc.report.vo.TagVO;
+import net.softsociety.zawa.vo.PostTagVO;
+import net.softsociety.zawa.vo.PostVO;
+import net.softsociety.zawa.vo.TagVO;
 
 public interface PostListMapper {
 

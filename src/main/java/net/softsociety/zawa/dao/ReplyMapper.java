@@ -1,9 +1,9 @@
-package com.sesoc.report.dao;
+package net.softsociety.zawa.dao;
 
 import java.util.ArrayList;
 
 
-import com.sesoc.report.vo.ReplyVO;
+import net.softsociety.zawa.vo.ReplyVO;
 
 public interface ReplyMapper {
 
