@@ -93,7 +93,7 @@ public class UserDAO {
 		return true;
 	}
 
-	public ArrayList<ProfileVO> getAccountProfiles(int owner) {
+	public ArrayList<ProfileVO> getAccountProfiles(long owner) {
 		ArrayList<ProfileVO> list = null;
 		try {
 			UserMapper mapper = sqlSession.getMapper(UserMapper.class);

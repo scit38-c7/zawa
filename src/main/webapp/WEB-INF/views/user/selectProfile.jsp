@@ -28,15 +28,27 @@
 			data: {
 				'owner': $.session.get('currentUser').id
 			},
-			success: function (result) {
+			success: function (data) {
 				var str = '';
-				$(result).each(function (index, item) {
+				var profileCount = 0;
+				if (data.trim()) { // 생성한 프로필이 없음
 					str += '<div class="row"';
 					str += '<div class="col"';
-					str += '<a href="user?id=' + item.id + '>' + item.displayid + '</a>';
+					str += 'プロフィールがありません';
 					str += '</div></div>';
-				});
+				} else { // 프로필이 하나 이상 있음
+					profileCount = data.length;
+					$(data).each(function (index, item) {
+						str += '<div class="row"';
+						str += '<div class="col"';
+						str += '<a href="user?id=' + item.id + '>' + item.displayid + '</a>';
+						str += '</div></div>';
+					});
+				}
 				$('#profile-selection-box').html(str);
+				if (profileCount < 3) {
+					enableCreateProfileBtn();
+				}
 			}
 		});
 
@@ -44,6 +56,12 @@
 
 
 		// 프로필 생성 트리거
+		function enableCreateProfileBtn() {
+			var str = '';
+			str += '<div id="profile-selection-footer" class="container">';
+			str += '<input type="button" value="プロフィール作成"';
+			str += '</div>';
+		}
 
 
 	});
@@ -53,8 +71,7 @@
 <body>
 	<div id="profile-selection-box" class="container">
 	</div>
-	<div id="profile-selection-footer" class="container">
-	</div>
+
 </body>
 
 </html>

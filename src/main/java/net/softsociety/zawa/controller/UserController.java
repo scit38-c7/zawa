@@ -74,9 +74,9 @@ public class UserController {
 		boolean result = dao.signin(vo, pw, httpSession);
 		if (result) {
 			return "redirect:/profiles";
-		}else {
-		rttr.addFlashAttribute("loginResult", result);
-		return "redirect:/";
+		} else {
+			rttr.addFlashAttribute("loginResult", result);
+			return "redirect:/";
 		}
 	}
 
@@ -87,16 +87,15 @@ public class UserController {
 	public String profiles() {
 		return "user/selectProfile";
 	}
-	
+
 	/**
 	 * 프로필 선택 화면
 	 */
 	@ResponseBody
 	@RequestMapping(value = "profiles/getMyProfiles", method = RequestMethod.GET)
-	public ArrayList<ProfileVO> getMyProfiles(int owner) {
+	public ArrayList<ProfileVO> getMyProfiles(long owner) {
 		ArrayList<ProfileVO> list = dao.getAccountProfiles(owner);
 		return list;
 	}
-	
-	
+
 }
