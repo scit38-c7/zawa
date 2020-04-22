@@ -15,7 +15,7 @@ import net.softsociety.zawa.vo.PostVO;
 @Controller
 public class TimelineController {
 
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	@RequestMapping(value = "user", method = RequestMethod.GET)
 	public String user(String id) {
 		return "dashboard/timeline";
 	}

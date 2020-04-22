@@ -29,7 +29,15 @@
 	</insert>
 
 	<!-- 이메일, 패스워드를 대조하여 로그인 처리 -->
-	<select id="signinAccount">
+	<select id="signinAccount" parameterType="AccountVO" resultType="AccountVO">
+		select
+			id
+			,email
+			,dob
+		from accounts
+		where
+			email = #{email}
+			and pwhash = #{pwhash}
 	</select>
 
 	<!-- 이메일 중복 확인 -->

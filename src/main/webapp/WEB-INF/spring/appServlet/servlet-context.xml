@@ -29,6 +29,7 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/user/**" />
+			<mapping path="/profiles/**" />
 			<beans:ref bean="userInterceptor" />
 		</interceptor>
 	</interceptors>

@@ -1,5 +1,9 @@
 package net.softsociety.zawa.controller;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.softsociety.zawa.dao.UserDAO;
 import net.softsociety.zawa.vo.AccountVO;
+import net.softsociety.zawa.vo.ProfileVO;
 
 /**
  * 계성, 프로필 관련 컨트롤러
@@ -27,9 +32,9 @@ public class UserController {
 	 * Account 등록을 위한 페이지로 이동한다
 	 * </p>
 	 */
-	@RequestMapping(value = "/signup", method = RequestMethod.GET)
+	@RequestMapping(value = "signup", method = RequestMethod.GET)
 	public String signup() {
-		return "user/createAccountForm";
+		return "createAccountForm";
 	}
 
 	/**
@@ -38,7 +43,7 @@ public class UserController {
 	 * 계정을 신규 등록하는 쿼리를 보내어, id를 성공적으로 부여 받은 경우 등록 완료 페이지로 이동한다.
 	 * </p>
 	 */
-	@RequestMapping(value = "/signup/createAccount", method = RequestMethod.POST)
+	@RequestMapping(value = "signup/createAccount", method = RequestMethod.POST)
 	public String createAccount(AccountVO vo, String pw, RedirectAttributes rttr) {
 		if (dao.createAccount(vo, pw)) {
 			rttr.addFlashAttribute("signupSuccess", true);
@@ -56,8 +61,42 @@ public class UserController {
 	 * </p>
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/signup/findDuplicateEmail", method = RequestMethod.POST)
+	@RequestMapping(value = "signup/findDuplicateEmail", method = RequestMethod.POST)
 	public boolean findDuplicateEmail(String email) {
 		return dao.findAccountByEmail(email);
 	}
+
+	/**
+	 * 계정 로그인
+	 */
+	@RequestMapping(value = "signin", method = RequestMethod.POST)
+	public String signin(AccountVO vo, String pw, HttpSession httpSession, RedirectAttributes rttr) {
+		boolean result = dao.signin(vo, pw, httpSession);
+		if (result) {
+			return "redirect:/profiles";
+		}else {
+		rttr.addFlashAttribute("loginResult", result);
+		return "redirect:/";
+		}
+	}
+
+	/**
+	 * 프로필 선택 화면
+	 */
+	@RequestMapping(value = "profiles", method = RequestMethod.POST)
+	public String profiles() {
+		return "user/selectProfile";
+	}
+	
+	/**
+	 * 프로필 선택 화면
+	 */
+	@ResponseBody
+	@RequestMapping(value = "profiles/getMyProfiles", method = RequestMethod.GET)
+	public ArrayList<ProfileVO> getMyProfiles(int owner) {
+		ArrayList<ProfileVO> list = dao.getAccountProfiles(owner);
+		return list;
+	}
+	
+	
 }
