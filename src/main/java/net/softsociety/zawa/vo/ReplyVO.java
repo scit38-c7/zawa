@@ -7,15 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostVO {
+public class ReplyVO {
 
+	private int replynum;
 	private int post_no;
 	private String user_id;
-	private String title;
-	private String content;
+	private String replytext;
 	private String inputdate;
-	private int hit;
-	private int like_cnt;
-	private String originalFilename;
-	private String savedFilename;
 }
