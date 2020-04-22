@@ -7,9 +7,9 @@
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 	<typeAliases>
-	
+		<typeAlias type="net.softsociety.zawa.vo.AccountVO" alias="AccountVO" />
 	</typeAliases>
 	<mappers>
-
+		<mapper resource="mapper/UserMapper.xml" />
 	</mappers>
 </configuration>
