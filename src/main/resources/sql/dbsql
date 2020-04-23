@@ -1,0 +1,70 @@
+-- 사용자 테이블 생성
+
+create table reportmember(
+	user_id varchar2(20) primary key,
+	user_pw varchar2(20) not null,
+	user_email varchar2(30) not null,
+);
+
+-- 게시글 테이블 생성
+create table reportpost(
+	post_no number primary key,
+	user_id varchar2(30) not null,
+	title varchar2(200) not null,
+	content varchar2(4000) not null,
+	inputdate date default sysdate,
+	hit number default 0,
+	like_cnt number default 0,
+	originalfilename varchar2(100),
+	savedfilename varchar2(300),
+	CONSTRAINT reportpost_FK FOREIGN KEY(user_id)
+	REFERENCES reportmember(user_id) ON DELETE CASCADE
+);
+
+-- 게시글 시퀀스 생성
+
+create sequence post_seq;
+
+-- 댓글 테이블 생성
+
+CREATE TABLE reply (
+	replynum	NUMBER			PRIMARY KEY,
+	post_no		NUMBER			NOT NULL CONSTRAINT REPLY_POST_NO_FK REFERENCES reportpost(post_no) ON DELETE CASCADE,
+	user_id		VARCHAR2(20)	NOT NULL CONSTRAINT REPLY_USERID_FK REFERENCES reportmember(user_id) ON DELETE CASCADE,
+	replytext	VARCHAR2(1000)	NOT NULL,
+	inputdate	DATE			DEFAULT SYSDATE
+);
+
+— 댓글 시퀀스 생성
+
+create sequence reply_seq;
+
+— 포스트 테이블과 태그 테이블을 연결해주는 중간 테이블
+CREATE TABLE reportpost_tag( 
+tag_id	NUMBER,
+post_no	NUMBER
+);
+ALTER TABLE reportpost_tag
+ADD CONSTRAINT FK_reportpost_tag FOREIGN KEY(tag_id) REFERENCES TAG(tag_id) ON DELETE CASCADE;
+
+ALTER TABLE reportpost_tag
+ADD CONSTRAINT FK_reportpost_tag_post_no FOREIGN KEY(post_no) REFERENCES REPORTPOST(post_no) ON DELETE CASCADE;
+commit;
+
+<태그내용 테이블>
+CREATE TABLE tag( 
+	tag_id		NUMBER		PRIMARY KEY,
+	tag_name	VARCHAR2(45)	
+);
+
+
+<좋아요 테이블>
+
+CREATE TABLE tolike(
+   	    like_no     NUMBER(5)    NOT NULL PRIMARY KEY, 
+[게시판번호]post_no     NUMBER(5)    NOT NULL,    
+[회원아이디]user_id     varchar2(30) not null,
+	    like_check  NUMBER(5)    DEFAULT 0 NULL,
+   	    FOREIGN KEY (user_id) REFERENCES member[*프로필테이블] (user_id),
+   	    FOREIGN KEY (post_no) REFERENCES reportpost[*게시판테이블] (post_no)
+);

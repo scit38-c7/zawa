@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sesoc.report.dao.ReplyMapper">
+    
+    
+    <!-- 댓글 작성 -->
+    <insert id="replyWrite" parameterType="ReplyVO">
+		INSERT INTO
+			reply
+		VALUES (
+			reply_seq.nextval
+			, #{post_no}
+			, #{user_id}
+			, #{replytext}
+			, sysdate
+		)
+	</insert>
+	
+	<!-- 댓글 출력 -->
+	<select id="replyList" parameterType="int" resultType="ReplyVO">
+		SELECT *
+		FROM
+			reply
+		WHERE
+			post_no = #{post_no}
+		ORDER BY
+			replynum DESC
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="replyDelete" parameterType="ReplyVO">
+		DELETE
+			reply
+		WHERE
+			replynum = #{replynum}
+			AND user_id = #{user_id}
+	</delete>
+    
+
+	<!-- 댓글 카운트 -->
+	<select id="replyCnt" resultType="int" parameterType="int">
+		select count(replynum) from reply where post_no = #{post_no}
+	</select>
+</mapper>

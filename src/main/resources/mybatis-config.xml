@@ -3,13 +3,22 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<settings>
-		<setting name="jdbcTypeForNull" value="NULL" />
-	</settings>
-	<typeAliases>
 	
+	<settings>
+	<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+	
+	<typeAliases>
+	<typeAlias type="com.sesoc.report.vo.PostTagVO" alias="ptVO"/>
+	<typeAlias type="com.sesoc.report.vo.TagVO" alias="tagVO"/>
+	<typeAlias type="com.sesoc.report.vo.MemberVO" alias="memberVO"/>
+	<typeAlias type="com.sesoc.report.vo.PostVO" alias="PostVO"/>
+	<typeAlias type="com.sesoc.report.vo.ReplyVO" alias="replyVO"/>
+	<typeAlias type="com.sesoc.report.vo.LikeVO" alias="likeVO"/>
 	</typeAliases>
 	<mappers>
-
+	<mapper resource="mapper/memberMapper.xml" />
+	<mapper resource="mapper/postMapper.xml"/>
+	<mapper resource="mapper/replyMapper.xml" />
 	</mappers>
 </configuration>
