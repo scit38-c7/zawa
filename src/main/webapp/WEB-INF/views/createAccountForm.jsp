@@ -71,7 +71,7 @@
 				$('#pw-check').text('loading');
 				if (pw.length < MIN_PW_LENGTH) {
 					$('#flag-pw').val(false);
-					$('#pw-check').text('パスワードは半角8字以上');
+					$('#pw-check').text('パスワードは半角' + MIN_PW_LENGTH + '字以上');
 				} else {
 					$('#flag-pw').val(true);
 					$('#pw-check').text('checked');
@@ -122,7 +122,7 @@
 				doblimit.setFullYear(doblimit.getFullYear() - AGE_LIMIT);
 				if (dob > doblimit) {
 					$('#flag-dob').val(false);
-					$('#dob-check').text('13歳未満の子供はZAWAサービスを利用できません');
+					$('#dob-check').text(AGE_LIMIT + '歳未満の子供はZAWAサービスを利用できません');
 				} else {
 					$('#flag-dob').val(true);
 					$('#dob-check').text('checked');

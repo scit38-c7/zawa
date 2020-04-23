@@ -21,39 +21,60 @@
 	const MAX_PROFILES = 3;
 
 	$(function () {
+		$('#profile-limit').text(MAX_PROFILES);
 		// 프로필 로드
 		$.ajax({
 			type: 'get',
 			url: 'profiles/getMyProfiles',
 			data: {
-				'owner': $.session.get('currentUser').id
+				'owner': $('#account-id').val()
 			},
-			success: function (result) {
+			success: function (data) {
 				var str = '';
-				$(result).each(function (index, item) {
-					str += '<div class="row"';
-					str += '<div class="col"';
-					str += '<a href="user?id=' + item.id + '>' + item.displayid + '</a>';
+				var profileCount = data.length;
+				$('#profile-count').text(profileCount);
+
+				if (profileCount > 0) { // 프로필이 하나 이상 있음
+					profileCount = data.length;
+					$(data).each(function (index, item) {
+						str += '<div class="row">';
+						str += '<div class="col">';
+						str += '<a href="user?id=' + item.id + '>' + item.displayid + '</a>';
+						str += '</div></div>';
+					});
+				} else { // 프로필이 없음
+					str += '<div class="row">';
+					str += '<div class="col">';
+					str += 'プロフィールがありません';
 					str += '</div></div>';
-				});
-				$('#profile-selection-box').html(str);
+				}
+				$('#profile-selection-list').html(str);
+				if (profileCount < MAX_PROFILES) {
+					enableCreateProfileBtn();
+				}
 			}
 		});
 
-		// 프로필 전환 트리거
-
-
 		// 프로필 생성 트리거
-
-
+		function enableCreateProfileBtn() {
+			var str = '<input type="button" id="create-profile-btn" value="プロフィール作成">';
+			$('#profile-selection-footer').html(str);
+			$('#create-profile-btn').on('click', function () {
+				$(location).attr('href', '<c:url value="profiles/create" />');
+			});
+		}
 	});
 </script>
 </head>
 
 <body>
+	<input type="hidden" id="account-id" value="${sessionScope.currentAccount.id}">
 	<div id="profile-selection-box" class="container">
-	</div>
-	<div id="profile-selection-footer" class="container">
+		<div id="profile-selection-header" class="container">
+			あなたのプロフィール <span id="profile-count"></span> / <span id="profile-limit"></span>
+		</div>
+		<div id="profile-selection-list" class="container"></div>
+		<div id="profile-selection-footer" class="container"></div>
 	</div>
 </body>
 

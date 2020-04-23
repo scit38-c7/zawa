@@ -46,13 +46,13 @@
 						<div class="row">
 							<div class="col">メールアドレス</div>
 							<div class="col">
-								<input type="text" id="email">
+								<input type="text" id="email" name="email">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col">パスワード</div>
 							<div class="col">
-								<input type="password" id="password">
+								<input type="password" id="pw" name="pw">
 							</div>
 						</div>
 						<div class="row">

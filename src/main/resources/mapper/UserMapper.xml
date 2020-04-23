@@ -48,7 +48,7 @@
 	</select>
 
 	<!-- 계정이 보유한 프로필 불러오기 -->
-	<select id="getAccountProfiles" parameterType="int" resultType="ProfileVO">
+	<select id="getAccountProfiles" parameterType="long" resultType="ProfileVO">
 		select
 			id
 			,displayid

@@ -6,6 +6,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import net.softsociety.zawa.vo.AccountVO;
+import net.softsociety.zawa.vo.ProfileVO;
+
 public class UserInterceptor extends HandlerInterceptorAdapter {
 
 	/**
@@ -16,17 +19,17 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		// 세션 영역에서 현재 접속 중인 Account의 id를 가져옴
 		HttpSession session = request.getSession();
-		String accountId = (String) session.getAttribute("accountId");
-		String profileId = (String) session.getAttribute("profileId");
+		AccountVO currentAccount = (AccountVO) session.getAttribute("currentAccount");
+		ProfileVO currentProfile = (ProfileVO) session.getAttribute("currentProfile");
 
 		// 로그인 상태가 아닐 경우 home으로 이동
-		if (accountId == null) {
+		if (currentAccount == null) {
 			System.out.println(request.getContextPath());
 			response.sendRedirect(request.getContextPath() + "/");
 			return false;
 		}
 		// TODO 활성화된 Profile이 없는 경우 존재하는 프로필 중 하나로 지정하여 타임라인으로 보냄
-		if (profileId == null) {
+		if (currentProfile == null) {
 
 		}
 

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProfileVO {
-	private int id;
+	private long id;
 	private String displayid;
 	private String name;
 	private int owner;

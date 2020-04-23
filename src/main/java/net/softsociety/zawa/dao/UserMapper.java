@@ -13,6 +13,6 @@ public interface UserMapper {
 
 	public int findAccountByEmail(String email);
 
-	public ArrayList<ProfileVO> getAccountProfiles(int owner);
+	public ArrayList<ProfileVO> getAccountProfiles(long owner);
 
 }

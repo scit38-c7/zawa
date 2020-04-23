@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountVO {
-	private int id;
+	private long id;
 	private String email;
 	private String pwhash;
 	private String dob;
