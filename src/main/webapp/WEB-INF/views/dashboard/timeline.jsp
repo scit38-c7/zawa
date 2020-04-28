@@ -68,41 +68,24 @@
 <body>
 	<header id="menubar">
 	<table>
-<<<<<<< HEAD
 		<tr>
 			<td>Home</td>
 		</tr>
-=======
->>>>>>> refs/remotes/origin/core
 			<tr>
-<<<<<<< HEAD
 				<td>Search</td>
-=======
-				<td>Home</td>
->>>>>>> refs/remotes/origin/core
 			</tr>
 			<tr>
-<<<<<<< HEAD
 				<td>Chat</td>
-=======
-				<td>My Profile</td>
->>>>>>> refs/remotes/origin/core
 			</tr>
 			<tr>
-<<<<<<< HEAD
-=======
 				<td>Groups</td>
 			</tr>
 			<tr>
->>>>>>> refs/remotes/origin/core
 				<td>Settings</td>
 			</tr>
-<<<<<<< HEAD
 			<tr>
 				<td>My Profiles</td>
 			</tr>
-=======
->>>>>>> refs/remotes/origin/core
 		</table></header>
 	<div id="profile-banner" class="container">
 		<div id="portrait">(portrait image)</div>
