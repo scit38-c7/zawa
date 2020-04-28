@@ -87,7 +87,7 @@
 		</table>
 	</header>
 	<div id="profile-banner" class="container">
-		<input type="hidden" id="profile-id" value=${requestScope.viewingUser}>
+		<input type="hidden" id="profile-id" value="${requestScope.viewingUser}">
 		<div id="portrait">(portrait image)</div>
 		<div id="nameplate">(name) (@displayid)</div>
 		<div id="profile">(profile text)</div>
