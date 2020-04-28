@@ -38,7 +38,7 @@
 					$(data).each(function (index, item) {
 						str += '<div class="row">';
 						str += '<div class="col">';
-						str += '<a href="user?u=' + item.displayid + '">' + item.name + ' @' + item.displayid + '</a>';
+						str += '<a href="profiles/set?displayid=' + item.displayid + '">' + item.name + ' @' + item.displayid + '</a>';
 						str += '</div></div>';
 						console.log(str);
 					});

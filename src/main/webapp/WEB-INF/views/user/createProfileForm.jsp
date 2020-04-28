@@ -86,7 +86,7 @@
 		});
 
 		$('#prev-btn').on('click', function () {
-			$(location).attr('href', '<c:url value="profiles/" />');
+			$(location).attr('href', '<c:url value="/profiles" />');
 		});
 	});
 </script>
