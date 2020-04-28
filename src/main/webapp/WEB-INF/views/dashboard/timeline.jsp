@@ -68,9 +68,9 @@
 <body>
 	<header id="menubar">
 	<table>
-			<tr>
-				<td>Home</td>
-			</tr>
+		<tr>
+			<td>Home</td>
+		</tr>
 			<tr>
 				<td>Search</td>
 			</tr>

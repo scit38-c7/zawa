@@ -118,4 +118,5 @@ public class UserController {
 			return "redirect:/profiles/create";
 		}
 	}
+	
 }

@@ -55,6 +55,7 @@
 			}
 		});
 
+		
 		// 프로필 생성 버튼
 		function enableCreateProfileBtn() {
 			var str = '<input type="button" id="create-profile-btn" value="プロフィール作成">';
