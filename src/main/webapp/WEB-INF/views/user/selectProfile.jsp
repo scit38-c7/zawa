@@ -35,12 +35,12 @@
 				$('#profile-count').text(profileCount);
 
 				if (profileCount > 0) { // 프로필이 하나 이상 있음
-					profileCount = data.length;
 					$(data).each(function (index, item) {
 						str += '<div class="row">';
 						str += '<div class="col">';
-						str += '<a href="user?u=' + item.id + '>' + item.displayid + '</a>';
+						str += '<a href="user?u=' + item.id + '">' + item.name + ' @' + item.displayid + '</a>';
 						str += '</div></div>';
+						console.log(str);
 					});
 				} else { // 프로필이 없음
 					str += '<div class="row">';

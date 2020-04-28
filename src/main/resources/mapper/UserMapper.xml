@@ -62,7 +62,7 @@
 	</select>
 	
 	<!-- 프로필 등록 -->
-	<select id="createProfile" parameterType="ProfileVO">
+	<insert id="createProfile" parameterType="ProfileVO">
 		insert into
 			profiles (
 				id
@@ -85,5 +85,5 @@
 				,#{name}
 				,#{owner}
 			)
-	</select>
+	</insert>
 </mapper>
