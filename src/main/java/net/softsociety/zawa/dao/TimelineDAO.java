@@ -11,7 +11,7 @@ public class TimelineDAO {
 	@Autowired
 	SqlSession sqlSession;
 
-	public TimelinePageNavigator getNavi(int currentPage) {
+	public ScrollPageNavigator getNavi(int currentPage) {
 
 		return null;
 	}

@@ -86,4 +86,18 @@
 				,#{owner}
 			)
 	</insert>
+	
+	<!-- displayid로 프로필 찾기 -->
+	<select id="getProfile" parameterType="String" resultType="ProfileVO">
+		select
+			id
+			,displayid
+			,name
+			,owner
+			,suspended
+			,isprivate
+			,thumbnail
+		from profiles
+		where displayid = #{displayid}
+	</select>
 </mapper>

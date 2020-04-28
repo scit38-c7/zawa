@@ -66,27 +66,21 @@
 	});
 </script>
 <body>
-	<header id="menubar"> </header>
-	<div id="sidebar">
-		<table>
+	<header id="menubar">
+	<table>
 			<tr>
-				<td>(icon)</td>
 				<td>Home</td>
 			</tr>
 			<tr>
-				<td>(icon)</td>
 				<td>My Profile</td>
 			</tr>
 			<tr>
-				<td>(icon)</td>
 				<td>Groups</td>
 			</tr>
 			<tr>
-				<td>(icon)</td>
 				<td>Settings</td>
 			</tr>
-		</table>
-	</div>
+		</table></header>
 	<div id="profile-banner" class="container">
 		<div id="portrait">(portrait image)</div>
 		<div id="nameplate">(name) (@displayid)</div>

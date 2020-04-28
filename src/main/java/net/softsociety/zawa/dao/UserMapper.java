@@ -17,4 +17,6 @@ public interface UserMapper {
 
 	public int createProfile(ProfileVO vo);
 
+	public ProfileVO getProfile(String displayid);
+
 }
