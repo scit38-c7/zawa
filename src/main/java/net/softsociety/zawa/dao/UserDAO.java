@@ -103,4 +103,38 @@ public class UserDAO {
 		}
 		return list;
 	}
+
+	public boolean createProfile(ProfileVO vo, HttpSession httpSession) {
+		boolean result = false;
+		AccountVO currentAccount = (AccountVO) httpSession.getAttribute("currentAccount");
+		vo.setOwner(currentAccount.getId());
+		try {
+			UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+			if (mapper.createProfile(vo) > 0) {
+				result = true;
+			} else {
+				result = false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public long getProfileId(String displayid) {
+		ProfileVO searchResult = null;
+		long result = 0;
+		try {
+			UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+			searchResult = mapper.getProfile(displayid);
+			if (searchResult == null) {
+				result = 0;
+			} else {
+				result = searchResult.getId();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

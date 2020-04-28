@@ -4,28 +4,27 @@
 <mapper namespace="net.softsociety.zawa.dao.UserMapper">
 	<!-- 계정 생성 -->
 	<insert id="createAccount" parameterType="AccountVO">
-		insert into
-			accounts (
-				id
-				,email
-				,pwhash
-				,dob
-			) values (
-				(
-					select id
-					from (
-						select
-							trunc(dbms_random.value(1000000000000000,10000000000000000)) as id
-						from dual
-						connect by level &lt;= 1000
-						minus (select id from accounts)
-					)
-					where rownum = 1
+		insert into	accounts (
+			id
+			,email
+			,pwhash
+			,dob
+		) values (
+			(
+				select id
+				from (
+					select
+						trunc(dbms_random.value(1000000000000000,10000000000000000)) as id
+					from dual
+					connect by level &lt;= 1000
+					minus (select id from accounts)
 				)
-				,#{email}
-				,#{pwhash}
-				,#{dob}				
+				where rownum = 1
 			)
+			,#{email}
+			,#{pwhash}
+			,#{dob}				
+		)
 	</insert>
 
 	<!-- 이메일, 패스워드를 대조하여 로그인 처리 -->
@@ -59,5 +58,45 @@
 			,thumbnail
 		from profiles
 		where owner = #{owner}
+	</select>
+	
+	<!-- 프로필 등록 -->
+	<insert id="createProfile" parameterType="ProfileVO">
+		insert into
+			profiles (
+				id
+				,displayid
+				,name
+				,owner
+			) values (
+				(
+					select id
+					from (
+						select
+							trunc(dbms_random.value(1000000000000000,10000000000000000)) as id
+						from dual
+						connect by level &lt;= 1000
+						minus (select id from profiles)
+					)
+					where rownum = 1
+				)
+				,#{displayid}
+				,#{name}
+				,#{owner}
+			)
+	</insert>
+	
+	<!-- displayid로 프로필 찾기 -->
+	<select id="getProfile" parameterType="String" resultType="ProfileVO">
+		select
+			id
+			,displayid
+			,name
+			,owner
+			,suspended
+			,isprivate
+			,thumbnail
+		from profiles
+		where displayid = #{displayid}
 	</select>
 </mapper>

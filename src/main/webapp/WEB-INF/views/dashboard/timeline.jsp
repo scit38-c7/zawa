@@ -66,27 +66,27 @@
 	});
 </script>
 <body>
-	<header id="menubar"> </header>
-	<div id="sidebar">
-		<table>
+	<header id="menubar">
+	<table>
+		<tr>
+			<td>Home</td>
+		</tr>
 			<tr>
-				<td>(icon)</td>
-				<td>Home</td>
+				<td>Search</td>
 			</tr>
 			<tr>
-				<td>(icon)</td>
-				<td>My Profile</td>
+				<td>Chat</td>
 			</tr>
 			<tr>
-				<td>(icon)</td>
 				<td>Groups</td>
 			</tr>
 			<tr>
-				<td>(icon)</td>
 				<td>Settings</td>
 			</tr>
-		</table>
-	</div>
+			<tr>
+				<td>My Profiles</td>
+			</tr>
+		</table></header>
 	<div id="profile-banner" class="container">
 		<div id="portrait">(portrait image)</div>
 		<div id="nameplate">(name) (@displayid)</div>

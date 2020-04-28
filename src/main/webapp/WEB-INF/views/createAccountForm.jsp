@@ -151,6 +151,10 @@
 			var email = $('#email').val();
 			return confirm(email + '\nこのアドレスで登録しますか？');
 		});
+
+		$('#prev-btn').on('click', function () {
+			$(location).attr('href', '<c:url value="/" />');
+		});
 	});
 </script>
 <c:if test="${requestScope.signupFailed == true}">

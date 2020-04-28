@@ -11,7 +11,7 @@ public class ProfileVO {
 	private long id;
 	private String displayid;
 	private String name;
-	private int owner;
+	private long owner;
 	private int suspended;
 	private int isprivate;
 	private String thumbnail;
