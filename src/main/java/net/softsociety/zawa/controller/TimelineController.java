@@ -2,11 +2,8 @@ package net.softsociety.zawa.controller;
 
 import java.util.ArrayList;
 
-<<<<<<< HEAD
 import javax.servlet.http.HttpSession;
 
-=======
->>>>>>> refs/remotes/origin/core
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +22,6 @@ public class TimelineController {
 	@Autowired
 	UserDAO userDao;
 
-	@Autowired
-	UserDAO userDao;
-
 	@RequestMapping(value = "profiles/selectProfile", method = RequestMethod.GET)
 	public String selectProfile(String displayid, HttpSession httpSession) {
 		httpSession.setAttribute("currentProfile", userDao.getProfileId(displayid));
@@ -35,7 +29,6 @@ public class TimelineController {
 	}
 
 	@RequestMapping(value = "user", method = RequestMethod.GET)
-<<<<<<< HEAD
 	public String user(String u, HttpSession httpSession, Model model) {
 		if (u.equals("")) {
 			model.addAttribute("viewingUserId", httpSession.getAttribute("currentProfile"));
@@ -43,11 +36,6 @@ public class TimelineController {
 			model.addAttribute("viewingUser", u);
 			model.addAttribute("viewingUserId", userDao.getProfileId(u));
 		}
-=======
-	public String user(String u, Model model) {
-		model.addAttribute("viewingUser", u);
-		model.addAttribute("viewingUserId", userDao.getProfileId(u));
->>>>>>> refs/remotes/origin/core
 		return "dashboard/timeline";
 	}
 
