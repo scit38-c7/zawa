@@ -39,7 +39,7 @@
 					$(data).each(function (index, item) {
 						str += '<div class="row">';
 						str += '<div class="col">';
-						str += '<a href="user?id=' + item.id + '>' + item.displayid + '</a>';
+						str += '<a href="user?u=' + item.id + '>' + item.displayid + '</a>';
 						str += '</div></div>';
 					});
 				} else { // 프로필이 없음
@@ -55,7 +55,7 @@
 			}
 		});
 
-		// 프로필 생성 트리거
+		// 프로필 생성 버튼
 		function enableCreateProfileBtn() {
 			var str = '<input type="button" id="create-profile-btn" value="プロフィール作成">';
 			$('#profile-selection-footer').html(str);

@@ -103,4 +103,21 @@ public class UserDAO {
 		}
 		return list;
 	}
+
+	public boolean createProfile(ProfileVO vo, HttpSession httpSession) {
+		boolean result = false;
+		AccountVO currentAccount = (AccountVO) httpSession.getAttribute("currentAccount");
+		vo.setOwner(currentAccount.getId());
+		try {
+			UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+			if (mapper.createProfile(vo) > 0) {
+				result = true;
+			} else {
+				result = false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

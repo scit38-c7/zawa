@@ -60,4 +60,30 @@
 		from profiles
 		where owner = #{owner}
 	</select>
+	
+	<!-- 프로필 등록 -->
+	<select id="createProfile" parameterType="ProfileVO">
+		insert into
+			profiles (
+				id
+				,displayid
+				,name
+				,owner
+			) values (
+				(
+					select id
+					from (
+						select
+							trunc(dbms_random.value(1000000000000000,10000000000000000)) as id
+						from dual
+						connect by level &lt;= 1000
+						minus (select id from profiles)
+					)
+					where rownum = 1
+				)
+				,#{displayid}
+				,#{name}
+				,#{owner}
+			)
+	</select>
 </mapper>

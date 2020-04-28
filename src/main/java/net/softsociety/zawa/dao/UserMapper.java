@@ -15,4 +15,6 @@ public interface UserMapper {
 
 	public ArrayList<ProfileVO> getAccountProfiles(long owner);
 
+	public int createProfile(ProfileVO vo);
+
 }

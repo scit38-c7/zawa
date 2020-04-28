@@ -89,7 +89,7 @@ public class UserController {
 	}
 
 	/**
-	 * 프로필 선택 화면
+	 * 프로필 목록 쿼리
 	 */
 	@ResponseBody
 	@RequestMapping(value = "profiles/getMyProfiles", method = RequestMethod.GET)
@@ -104,5 +104,18 @@ public class UserController {
 	@RequestMapping(value = "profiles/create", method = RequestMethod.GET)
 	public String createProfileForm() {
 		return "user/createProfileForm";
+	}
+
+	/**
+	 * 프로필 신규 등록 쿼리
+	 */
+	@RequestMapping(value = "profiles/createProfile", method = RequestMethod.POST)
+	public String createProfile(ProfileVO vo, HttpSession httpSession, RedirectAttributes rttr) {
+		if (dao.createProfile(vo, httpSession)) {
+			return "redirect:/profiles";
+		} else {
+			rttr.addFlashAttribute("createProfileFailed", true);
+			return "redirect:/profiles/create";
+		}
 	}
 }
