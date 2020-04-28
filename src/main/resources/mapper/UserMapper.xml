@@ -98,6 +98,9 @@
 			,thumbnail
 		from profiles
 		where displayid = #{displayid}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> refs/remotes/origin/core
 	</select>
 </mapper>
