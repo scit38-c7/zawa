@@ -120,4 +120,21 @@ public class UserDAO {
 		}
 		return result;
 	}
+
+	public long getProfileId(String displayid) {
+		ProfileVO searchResult = null;
+		long result = 0;
+		try {
+			UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+			searchResult = mapper.getProfile(displayid);
+			if (searchResult == null) {
+				result = 0;
+			} else {
+				result = searchResult.getId();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

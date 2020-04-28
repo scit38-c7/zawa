@@ -24,13 +24,13 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 
 		// 로그인 상태가 아닐 경우 home으로 이동
 		if (currentAccount == null) {
-			System.out.println(request.getContextPath());
 			response.sendRedirect(request.getContextPath() + "/");
 			return false;
 		}
 		// TODO 활성화된 Profile이 없는 경우 존재하는 프로필 중 하나로 지정하여 타임라인으로 보냄
 		if (currentProfile == null) {
-
+			response.sendRedirect(request.getContextPath() + "/profiles");
+			return false;
 		}
 
 		// 세션에 문제가 없는 경우 컨트롤러의 로직을 수행
