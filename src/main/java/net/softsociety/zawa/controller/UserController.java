@@ -75,7 +75,7 @@ public class UserController {
 		if (result) {
 			return "redirect:/profiles";
 		} else {
-			rttr.addFlashAttribute("loginResult", result);
+			rttr.addFlashAttribute("signinSuccess", result);
 			return "redirect:/";
 		}
 	}
@@ -118,5 +118,16 @@ public class UserController {
 			return "redirect:/profiles/create";
 		}
 	}
+
+	@RequestMapping(value = "profiles/set", method = RequestMethod.GET)
+	public String setProfile(String displayid, HttpSession httpSession) {
+		httpSession.setAttribute("currentProfile", dao.getProfile(displayid));
+		return "redirect:/user?u=" + displayid;
+	}
 	
+	@RequestMapping(value = "signout", method = RequestMethod.GET)
+	public String signout(HttpSession httpSession) {
+		httpSession.invalidate();
+		return "redirect:/";
+	}
 }

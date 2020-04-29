@@ -5,119 +5,152 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>ZAWA プロフィール作成</title>
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-		crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-		crossorigin="anonymous"></script>
-</head>
-<script>
-	const MIN_LENGTH = 2;
-	const MAX_LENGTH = 20;
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="にぎやかなそーしゃる広場">
+	<title>プロフィール作成 - ZAWA</title>
 
-	$(function () {
-		// displayid 유효성 검사
-		$('#displayid').on('focusout', function () {
-			var displayid = $('#displayid').val();
+	<!-- Custom fonts -->
+	<link href="<c:url value='/resources/css/fontawesome-all.min.css' />" rel="stylesheet" type="text/css">
+	<link
+		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+		rel="stylesheet">
 
-			if (displayid.length < MIN_LENGTH) {
-				$('#flag-displayid').val(false);
-				$('#displayid-check').text('短すぎます');
-			} else if (displayid.length > MAX_LENGTH) {
-				$('#flag-displayid').val(false);
-				$('#displayid-check').text('長すぎます');
-			} else {
-				// 반각 영숫자, 언더바 체크
-				var re = /^[a-zA-Z0-9_]{2,20}$/g
-				if (!re.test(displayid)) {
-					$('#flag-displayid').val(false);
-					$('#displayid-check').text('半角英数字とアンダーバー(‗)で設定してください');
-				} else {
-					$('#flag-displayid').val(true);
-					$('#displayid-check').text('checked');
-				}
-			}
-			flagAllChecked();
-		});
+	<!-- Bootstrap core JavaScript-->
+	<script src="<c:url value='/resources/js/jquery-3.4.1.min.js' />"></script>
+	<script src="<c:url value='/resources/js/bootstrap.bundle.min.js' />"></script>
+	<script src="<c:url value='/resources/js/jquery.easing.min.js' />"></script>
 
-		// name 유효성 검사
-		$('#name').on('focusout', function () {
-			var name = $('#name').val();
+	<!-- Custom styles for all pages -->
+	<link href="<c:url value='/resources/css/sb-admin-2.min.css' />" rel="stylesheet">
+	<script src="<c:url value='/resources/js/sb-admin-2.min.js' />"></script>
 
-			if (name.length > MAX_LENGTH) {
-				$('#flag-name').val(false);
-				$('#name-check').text('長すぎます');
-			} else {
-				if (name == '') {
-					var displayid = $('#displayid').val();
-					$('#name').val(displayid);
-				}
-				$('#flag-name').val(true);
-				$('#name-check').text('checked');
-			}
-			flagAllChecked();
-		});
-
-		// 모두 제대로 입력 시 등록 버튼 활성화
-		function flagAllChecked() {
-			var result = true;
-			$(".hidden-flag").each(function (index, item) {
-				if ($(item).val() != 'true') {
-					result = false;
-				}
-			});
-			if (result) {
-				$('#submit-btn').prop('disabled', false);
-			} else {
-				$('#submit-btn').prop('disabled', true);
-			}
-		}
-		flagAllChecked();
-
-		$('#submit-btn').on('click', function () {
-			var displayid = $('#displayid').val();
-			return confirm(displayid + '\nこのプロフィールを作成しますか？');
-		});
-
-		$('#prev-btn').on('click', function () {
-			$(location).attr('href', '<c:url value="profiles/" />');
-		});
-	});
-</script>
-<c:if test="${requestScope.createProfileFailed == true}">
 	<script>
-		alert('プロフィール作成に失敗しました');
+		const MIN_LENGTH = 2;
+		const MAX_LENGTH = 20;
+
+		$(function () {
+			// displayid 유효성 검사
+			$('#displayid').on('focusout', function () {
+				var displayid = $('#displayid').val();
+
+				if (displayid.length < MIN_LENGTH) {
+					$('#flag-displayid').val(false);
+					$('#displayid-check').html('<span class="text-danger small">短すぎます</span>');
+				} else if (displayid.length > MAX_LENGTH) {
+					$('#flag-displayid').val(false);
+					$('#displayid-check').html('<span class="text-danger small">長すぎます</span>');
+				} else {
+					// 반각 영숫자, 언더바 체크
+					var re = /^[a-zA-Z0-9_]{2,20}$/g
+					if (!re.test(displayid)) {
+						$('#flag-displayid').val(false);
+						$('#displayid-check').html('<span class="text-danger small">半角英数字とアンダーバー(‗)で設定してください</span>');
+					} else {
+						$('#flag-displayid').val(true);
+						$('#displayid-check').html('<span class="text-success small">OK</span>');
+					}
+				}
+				flagAllChecked();
+			});
+
+			// name 유효성 검사
+			$('#name').on('focusout', function () {
+				var name = $('#name').val();
+
+				if (name.length > MAX_LENGTH) {
+					$('#flag-name').val(false);
+					$('#name-check').html('<span class="text-danger small">長すぎます</span>');
+				} else {
+					if (name == '') {
+						var displayid = $('#displayid').val();
+						$('#name').val(displayid);
+					}
+					$('#flag-name').val(true);
+					$('#name-check').html('<span class="text-success small">OK</span>');
+				}
+				flagAllChecked();
+			});
+
+			// 모두 제대로 입력 시 등록 버튼 활성화
+			function flagAllChecked() {
+				var $btn = $('#submit-btn');
+				var result = true;
+
+				$(".hidden-flag").each(function (index, item) {
+					if ($(item).val() != 'true') {
+						result = false;
+					}
+				});
+				if (result) {
+					$btn.prop('class', 'btn btn-primary btn-user btn-block');
+					$btn.on('click', function () {
+						submitForm();
+					});
+				} else {
+					$btn.prop('class', 'btn btn-secondary btn-user btn-block');
+					$btn.removeProp('onclick');
+				}
+			}
+			flagAllChecked();
+
+			function submitForm() {
+				var displayid = $('#displayid').val();
+				if (confirm('@' + displayid + '\nこのプロフィールを作成しますか？')) {
+					$('#create-profile-form').submit();
+				}
+			}
+		});
 	</script>
-</c:if>
+	<c:if test="${requestScope.createProfileFailed == true}">
+		<script>
+			alert('プロフィール作成に失敗しました');
+		</script>
+	</c:if>
 </head>
 
-<body>
-	<div id="create-profile-box" class="container">
-		<form action="<c:url value='/profiles/createProfile' />" method="post">
-			<div class="row">
-				<div class="col form-header">ユーザー名</div>
-				<div class="col"><input type="text" id="displayid" name="displayid"></div>
-				<div id="displayid-check" class="col"></div>
-				<input type="hidden" id="flag-displayid" class="hidden-flag" value="false">
+<body class="bg-gradient-primary">
+
+	<div class="container">
+
+		<div class="card o-hidden border-0 shadow-lg my-5">
+			<div class="card-body p-0">
+				<!-- Nested Row within Card Body -->
+				<div class="p-5">
+					<div class="text-center">
+						<h1 class="h4 text-gray-900 mb-4">プロフィール作成</h1>
+					</div>
+					<form id="create-profile-form" class="user" action="<c:url value='/profiles/createProfile' />"
+						method="post">
+						<!-- displayid 입력 -->
+						<div class="form-group">
+							<input type="text" id="displayid" name="displayid" class="form-control form-control-user"
+								placeholder="ユーザー名">
+						</div>
+						<div id="displayid-check" class="form-group"></div>
+						<input type="hidden" id="flag-displayid" class="hidden-flag" value="false">
+						<!-- 별명 입력 -->
+						<div class="form-group">
+							<input type="text" id="name" name="name" class="form-control form-control-user"
+								placeholder="名前">
+						</div>
+						<div id="name-check" class="form-group"></div>
+						<input type="hidden" id="flag-name" class="hidden-flag" value="false">
+						<!-- 등록 버튼 -->
+						<span id="submit-btn" class="btn btn-secondary btn-user btn-block">
+							登録
+						</span>
+					</form>
+					<hr>
+					<div class="text-center">
+						<a class="small" href="<c:url value='/profiles' />">戻る</a>
+					</div>
+				</div>
 			</div>
-			<div class="row">
-				<div class="col form-header">名前</div>
-				<div class="col"><input type="text" id="name" name="name"></div>
-				<div id="name-check" class="col"></div>
-				<input type="hidden" id="flag-name" class="hidden-flag" value="false">
-			</div>
-			<div class="row">
-				<div class="col"><input type="submit" id="submit-btn" value="作成" disabled></div>
-				<div class="col"><input type="button" id="prev-btn" value="戻る"></div>
-			</div>
-		</form>
+		</div>
+
 	</div>
+
 </body>
 
 </html>

@@ -9,8 +9,10 @@
 	<typeAliases>
 		<typeAlias type="net.softsociety.zawa.vo.AccountVO" alias="AccountVO" />
 		<typeAlias type="net.softsociety.zawa.vo.ProfileVO" alias="ProfileVO" />
+		<typeAlias type="net.softsociety.zawa.vo.PostVO" alias="PostVO" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/UserMapper.xml" />
+		<mapper resource="mapper/PostMapper.xml" />
 	</mappers>
 </configuration>

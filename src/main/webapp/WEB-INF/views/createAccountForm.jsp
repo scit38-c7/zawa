@@ -5,198 +5,227 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>ZAWA アカウント登録</title>
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-		crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-		crossorigin="anonymous"></script>
-</head>
-<script>
-	const MIN_PW_LENGTH = 8;
-	const AGE_LIMIT = 13;
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="にぎやかなそーしゃる広場">
+	<title>アカウント登録 - ZAWA</title>
 
-	$(function () {
-		// 이메일 체크
-		$('#email').on('focusout', function () {
-			var email = $('#email').val();
-			if (email.length == 0) {
-				$('#flag-email').val(false);
-				$('#email-check').text('');
-				flagAllChecked();
-				return;
-			}
-			$('#email-check').text('loading');
-			// 이메일 형식 체크 (regex)
-			var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/igm;
-			if (!re.test(email)) {
-				$('#flag-email').val(false);
-				$('#email-check').text('正しいアドレスを入力してください');
-				flagAllChecked();
-				return;
-			}
-			// 이메일 중복 체크 (Ajax)
-			$.ajax({
-				type: 'post',
-				url: 'signup/findDuplicateEmail',
-				data: {
-					'email': email.toLowerCase()
-				},
-				success: function (result) {
-					if (result) {
-						$('#flag-email').val(false);
-						$('#email-check').text('すでに登録されているアドレスです');
-					} else {
-						// 이메일에 문제 없을 시 확인 표시
-						$('#flag-email').val(true);
-						$('#email-check').text('checked');
-					}
-					flagAllChecked();
-				}
-			});
-		});
+	<!-- Custom fonts -->
+	<link href="<c:url value='/resources/css/fontawesome-all.min.css' />" rel="stylesheet" type="text/css">
+	<link
+		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+		rel="stylesheet">
 
-		// 패스워드 조건 (8자 이상) 체크 + 재입력 체크
-		$('#pw').on('focusout', function () {
-			var pw = $('#pw').val();
-			if (pw.length == 0) {
-				$('#flag-pw').val(false);
-				$('#pw-check').text('');
-			} else {
-				$('#pw-check').text('loading');
-				if (pw.length < MIN_PW_LENGTH) {
-					$('#flag-pw').val(false);
-					$('#pw-check').text('パスワードは半角' + MIN_PW_LENGTH + '字以上');
-				} else {
-					$('#flag-pw').val(true);
-					$('#pw-check').text('checked');
-				}
-			}
-			pw2Check();
-			flagAllChecked();
-		});
+	<!-- Bootstrap core JavaScript-->
+	<script src="<c:url value='/resources/js/jquery-3.4.1.min.js' />"></script>
+	<script src="<c:url value='/resources/js/bootstrap.bundle.min.js' />"></script>
+	<script src="<c:url value='/resources/js/jquery.easing.min.js' />"></script>
 
-		// 패스워드 재입력 체크
-		$('#pw2').on('focusout', function () {
-			pw2Check();
-			flagAllChecked();
-		});
+	<!-- Custom styles for all pages -->
+	<link href="<c:url value='/resources/css/sb-admin-2.min.css' />" rel="stylesheet">
+	<script src="<c:url value='/resources/js/sb-admin-2.min.js' />"></script>
 
-		function pw2Check() {
-			var pw = $('#pw').val();
-			var pw2 = $('#pw2').val();
-			// 패스워드 조건을 충족하지 못한 경우 재입력 체크를 초기화
-			if (pw2.length == 0 || $('#flag-pw').val() == 'false') {
-				$('#flag-pw2').val(false);
-				$('#pw2-check').text('');
-			} else {
-				$('#pw2-check').text('loading');
-				// 재입력 패스워드 일치 여부 확인
-				if (pw != pw2) {
-					$('#flag-pw2').val(false);
-					$('#pw2-check').text('パスワードが一致しません');
-				} else {
-					$('#flag-pw2').val(true);
-					$('#pw2-check').text('checked');
-				}
-			}
-		};
-
-		// 생년월일 체크 (만 13세 이상)
-		$('#dob').on('focusout', function () {
-			$('#dob-check').text('loading');
-			var dob = new Date($('#dob').val());
-			var today = new Date();
-			today.setUTCHours(0, 0, 0, 0);
-			if (isNaN(dob) || dob > today) { // 날짜가 제대로 입력되지 않은 경우, 생일이 미래인 경우
-				$('#flag-dob').val(false);
-				$('#dob-check').text('正しい生年月日を入力してください');
-			} else {
-				// 나이 제한 기준 날짜 = 오늘 날짜 - 제한 연령
-				var doblimit = today;
-				doblimit.setFullYear(doblimit.getFullYear() - AGE_LIMIT);
-				if (dob > doblimit) {
-					$('#flag-dob').val(false);
-					$('#dob-check').text(AGE_LIMIT + '歳未満の子供はZAWAサービスを利用できません');
-				} else {
-					$('#flag-dob').val(true);
-					$('#dob-check').text('checked');
-				}
-			}
-			flagAllChecked();
-		});
-
-		// 모두 제대로 입력 시 가입 버튼 활성화
-		function flagAllChecked() {
-			var result = true;
-			$(".hidden-flag").each(function (index, item) {
-				if ($(item).val() != 'true') {
-					result = false;
-				}
-			});
-			if (result) {
-				$('#submit-btn').prop('disabled', false);
-			} else {
-				$('#submit-btn').prop('disabled', true);
-			}
-		}
-		flagAllChecked();
-
-		$('#submit-btn').on('click', function () {
-			var email = $('#email').val();
-			return confirm(email + '\nこのアドレスで登録しますか？');
-		});
-
-		$('#prev-btn').on('click', function () {
-			$(location).attr('href', '<c:url value="/" />');
-		});
-	});
-</script>
-<c:if test="${requestScope.signupFailed == true}">
 	<script>
-		alert('アカウント登録に失敗しました');
+		const MIN_PW_LENGTH = 8;
+		const AGE_LIMIT = 13;
+
+		$(function () {
+			// 이메일 체크
+			$('#email').on('focusout', function () {
+				var email = $('#email').val();
+				if (email.length == 0) {
+					$('#flag-email').val(false);
+					$('#email-check').html('');
+					flagAllChecked();
+					return;
+				}
+				$('#email-check').html('<span class="text-secondary small">確認中…</span>');
+				// 이메일 형식 체크 (regex)
+				var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/igm;
+				if (!re.test(email)) {
+					$('#flag-email').val(false);
+					$('#email-check').html('<span class="text-danger small">正しいアドレスを入力してください</span>');
+					flagAllChecked();
+					return;
+				}
+				// 이메일 중복 체크 (Ajax)
+				$.ajax({
+					type: 'post',
+					url: 'signup/findDuplicateEmail',
+					data: {
+						'email': email.toLowerCase()
+					},
+					success: function (result) {
+						if (result) {
+							$('#flag-email').val(false);
+							$('#email-check').html('<span class="text-danger small">すでに登録されているアドレスです</span>');
+						} else {
+							// 이메일에 문제 없을 시 확인 표시
+							$('#flag-email').val(true);
+							$('#email-check').html('<span class="text-success small">OK</span>');
+						}
+						flagAllChecked();
+					}
+				});
+			});
+
+			// 패스워드 조건 체크 + 재입력 체크
+			$('#pw').on('focusout', function () {
+				pwCheck();
+			});
+			$('#pw2').on('focusout', function () {
+				pwCheck();
+			});
+
+			function pwCheck() {
+				var pw = $('#pw').val();
+				var pw2 = $('#pw2').val();
+				var $flag = $('#flag-pw');
+				var $check = $('#pw-check');
+
+				if (pw.length == 0) {
+					$flag.val(false);
+					$check.html('');
+				} else if (pw.length < MIN_PW_LENGTH) {
+					$flag.val(false);
+					$check.html('<span class="text-danger small">パスワードは半角' + MIN_PW_LENGTH + '字以上</span>');
+				} else if (pw2.length == 0) {
+					$flag.val(false);
+					$check.html('');
+				} else if (pw != pw2) {
+					$flag.val(false);
+					$check.html('<span class="text-danger small">パスワードが一致しません</span>');
+				} else {
+					$flag.val(true);
+					$check.html('<span class="text-success small">OK</span>');
+				}
+				flagAllChecked();
+			}
+
+			// 생년월일 체크 (만 13세 이상)
+			$('#dob').on('focusout', function () {
+				var dob = new Date($('#dob').val());
+				var today = new Date();
+				today.setUTCHours(0, 0, 0, 0);
+				if (isNaN(dob) || dob > today) { // 날짜가 제대로 입력되지 않은 경우, 생일이 미래인 경우
+					$('#flag-dob').val(false);
+					$('#dob-check').html('<span class="text-danger small">正しい生年月日を入力してください</span>');
+				} else {
+					// 나이 제한 기준 날짜 = 오늘 날짜 - 제한 연령
+					var doblimit = today;
+					doblimit.setFullYear(doblimit.getFullYear() - AGE_LIMIT);
+					if (dob > doblimit) {
+						$('#flag-dob').val(false);
+						$('#dob-check').html('<span class="text-danger small">' + AGE_LIMIT + '歳未満の子供はZAWAサービスを利用できません</span>');
+					} else {
+						$('#flag-dob').val(true);
+						$('#dob-check').html('<span class="text-success small">OK</span>');
+					}
+				}
+				flagAllChecked();
+			});
+
+			// 모두 제대로 입력 시 가입 버튼 활성화
+			function flagAllChecked() {
+				var $btn = $('#submit-btn');
+				var result = true;
+
+				$(".hidden-flag").each(function (index, item) {
+					if ($(item).val() != 'true') {
+						result = false;
+					}
+				});
+				if (result) {
+					$btn.prop('class', 'btn btn-primary btn-user btn-block');
+					$btn.on('click', function () {
+						submitForm();
+					});
+				} else {
+					$btn.prop('class', 'btn btn-secondary btn-user btn-block');
+					$btn.removeProp('onclick');
+				}
+			}
+			flagAllChecked();
+
+			function submitForm() {
+				var email = $('#email').val();
+				if (confirm(email + '\nこのアドレスで登録しますか？')) {
+					$('#signup-form').submit();
+				}
+			}
+		});
 	</script>
-</c:if>
+	<c:if test="${requestScope.signupFailed == true}">
+		<script>
+			alert('アカウント登録に失敗しました');
+		</script>
+	</c:if>
 </head>
 
-<body>
-	<div id="signup-box" class="container">
-		<form action="<c:url value='/signup/createAccount' />" method="post">
-			<div class="row">
-				<div class="col form-header">メールアドレス</div>
-				<div class="col"><input type="text" id="email" name="email"></div>
-				<div id="email-check" class="col"></div>
-				<input type="hidden" id="flag-email" class="hidden-flag" value="false">
+<body class="bg-gradient-primary">
+
+	<div class="container">
+
+		<div class="card o-hidden border-0 shadow-lg my-5">
+			<div class="card-body p-0">
+				<!-- Nested Row within Card Body -->
+				<div class="row">
+					<div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+					<div class="col-lg-7">
+						<div class="p-5">
+							<div class="text-center">
+								<h1 class="h4 text-gray-900 mb-4">アカウント登録</h1>
+							</div>
+							<form id="signup-form" class="user" action="<c:url value='/signup/createAccount' />"
+								method="post">
+								<!-- 이메일 입력 -->
+								<div class="form-group">
+									<input type="email" id="email" name="email" class="form-control form-control-user"
+										placeholder="メールアドレス">
+								</div>
+								<div id="email-check" class="form-group"></div>
+								<input type="hidden" id="flag-email" class="hidden-flag" value="false">
+								<!-- 패스워드 입력 -->
+								<div class="form-group row">
+									<div class="col-sm-6 mb-3 mb-sm-0">
+										<input type="password" id="pw" name="pw" class="form-control form-control-user"
+											placeholder="パスワード">
+									</div>
+									<div class="col-sm-6">
+										<input type="password" id="pw2" class="form-control form-control-user"
+											placeholder="パスワード再入力">
+									</div>
+								</div>
+								<div id="pw-check" class="form-group"></div>
+								<input type="hidden" id="flag-pw" class="hidden-flag" value="false">
+								<!-- 생년월일 입력 -->
+								<div class="form-group row">
+									<div class="col-sm-3 mb-3 mb-sm-0 mt-sm-3 text-left text-sm-center">
+										生年月日
+									</div>
+									<div class="col-sm-9">
+										<input type="date" id="dob" name="dob" class="form-control form-control-user">
+									</div>
+								</div>
+								<div id="dob-check" class="form-group"></div>
+								<input type="hidden" id="flag-dob" class="hidden-flag" value="false">
+								<!-- 등록 버튼 -->
+								<span id="submit-btn" class="btn btn-secondary btn-user btn-block">
+									登録
+								</span>
+							</form>
+							<hr>
+							<div class="text-center">
+								<a class="small" href="<c:url value='/' />">戻る</a>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="row">
-				<div class="col form-header">パスワード</div>
-				<div class="col"><input type="password" id="pw" name="pw"></div>
-				<div id="pw-check" class="col"></div>
-				<input type="hidden" id="flag-pw" class="hidden-flag" value="false">
-			</div>
-			<div class="row">
-				<div class="col form-header">パスワード再入力</div>
-				<div class="col"><input type="password" id="pw2"></div>
-				<div id="pw2-check" class="col"></div>
-				<input type="hidden" id="flag-pw2" class="hidden-flag" value="false">
-			</div>
-			<div class="row">
-				<div class="col form-header">生年月日</div>
-				<div class="col"><input type="date" id="dob" name="dob"></div>
-				<div id="dob-check" class="col"></div>
-				<input type="hidden" id="flag-dob" class="hidden-flag" value="false">
-			</div>
-			<div class="row">
-				<div class="col"><input type="submit" id="submit-btn" value="登録" disabled></div>
-				<div class="col"><input type="button" id="prev-btn" value="戻る"></div>
-			</div>
-		</form>
+		</div>
+
 	</div>
+
 </body>
 
 </html>
