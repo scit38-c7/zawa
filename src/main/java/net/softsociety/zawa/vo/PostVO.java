@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class PostVO {
 
 	private int post_no;
-	private long author;
+	private String author;
 	private String content;
 	private String inputdate;
 	private int like_count;

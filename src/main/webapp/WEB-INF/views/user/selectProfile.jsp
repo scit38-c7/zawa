@@ -44,7 +44,7 @@
 
 					if (profileCount > 0) { // 프로필이 하나 이상 있음
 						$(data).each(function (index, item) {
-							str += '<div class="col-xl-3 col-md-6 mb-4">';
+							str += '<div class="col-12">';
 							str += '<div class="card border-left-success shadow h-100 py-2">';
 							str += '<div class="card-body">';
 							str += '<div class="row no-gutters align-items-center">';
@@ -100,7 +100,7 @@
 							</div>
 							<input type="hidden" id="account-id" value="${sessionScope.currentAccount.id}">
 							<!-- 프로필 리스트 -->
-							<div id="profile-selection-list"></div>
+							<div id="profile-selection-list" class="row"></div>
 							<span id="create-profile-btn" class="btn btn-secondary btn-user btn-block">
 								プロフィール作成
 							</span>

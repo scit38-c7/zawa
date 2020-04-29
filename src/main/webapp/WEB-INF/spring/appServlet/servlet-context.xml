@@ -30,6 +30,7 @@
 		<interceptor>
 			<mapping path="/user/**" />
 			<mapping path="/profiles/**" />
+			<mapping path="/search/**" />
 			<beans:ref bean="userInterceptor" />
 		</interceptor>
 	</interceptors>

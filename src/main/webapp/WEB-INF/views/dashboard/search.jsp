@@ -9,7 +9,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="にぎやかなそーしゃる広場">
-	<title>ホーム - ZAWA</title>
+	<title>検索結果 - ZAWA</title>
 
 	<!-- Custom fonts -->
 	<link href="<c:url value='/resources/css/fontawesome-all.min.css' />" rel="stylesheet" type="text/css">
@@ -30,63 +30,33 @@
 		var currentPage = 1;
 
 		$(function () {
-			var id = $('#profile-id').val();
+			var searchKeyword = $('#search-keyword').val();
 
-			// 타임라인 한 "페이지"를 로드
+			// 검색결과 한 "페이지"를 로드
 			function loadTimelinePage() {
 				$.ajax({
-					url: "readTimelinePage",
+					url: "readSearchPage",
 					type: "get",
 					data: {
-						id: id,
+						searchKeyword: searchKeyword,
 						currentPage: currentPage
 					},
 					success: function (data) {
 						var str = '';
 						$.each(data, function (index, item) {
 							str += '<div class="card shadow mb-4 col-12">';
-							str += '<div class="card-header py-3 row">';
-							// str += '<h6 class="m-0 font-weight-bold text-primary">@' + item.author + '</h6>';
-							str += '<div class="col mr-2"><h6 class="m-0 font-weight-bold text-primary">@' + item.author + '</h6></div>';
-							str += '<div class="delete-btn col-auto">'
-							str += '<input type="hidden" value="' + item.post_no + '">';
-							str += '<i class="fas fa-trash-alt fa-sm fa-fw text-gray-400"></i></div>';
+							str += '<div class="card-header py-3">';
+							str += '<h6 class="m-0 font-weight-bold text-primary">@' + item.author + '</h6>';
 							str += '</div>';
 							str += '<div class="card-body">' + item.content + '</div></div>';
 						});
 						$('#posts').append(str);
-						deleteFnc();
 						// currentPage를 1 증가
 						currentPage++;
 					}
 				});
 			}
 			loadTimelinePage();
-
-			function deleteFnc() {
-				$('.delete-btn').on('click', function () {
-					if (confirm('削除しますか？')) {
-						// closest(): 선택된 대상으로부터 가장 가까운 부모를 선택하는 함수
-						// find(): 선택된 대상의 후손들을 선택하는 함수
-						// eq(): 지정된 순번에 해당하는 대상을 선택하는 함수
-						var post_no = $(this).find('input').eq(0).val();
-
-						$.ajax({
-							url: "deletePost",
-							type: "get",
-							data: {
-								post_no: post_no
-							},
-							success: function () {
-								location.reload();
-							},
-							error: function (e) {
-								console.log(e);
-							}
-						});
-					}
-				});
-			}
 
 			// 일정 부분 이하 스크롤 시 자동 페이징
 			$(window).scroll(function () {
@@ -241,12 +211,11 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 
-					<input type="hidden" id="profile-id" value="${requestScope.viewingUser.displayid}">
+					<input type="hidden" id="search-keyword" value="${requestScope.searchKeyword}">
 
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">${requestScope.viewingUser.name}
-							@${requestScope.viewingUser.displayid}</h1>
+						<h1 class="h3 mb-0 text-gray-800">${requestScope.searchKeyword}</h1>
 					</div>
 
 					<div id="posts" class="row">

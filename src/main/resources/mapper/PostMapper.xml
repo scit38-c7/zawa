@@ -4,10 +4,37 @@
 <mapper namespace="net.softsociety.zawa.dao.PostMapper">
 	<select id="getTotal" parameterType="String" resultType="int">
 		select count(*) from posts
-		where displayid = #{displayid}
+		where author = #{author}
 	</select>
 	<select id="getUserPosts" parameterType="String" resultType="PostVO">
 		select * from posts
-		where displayid = #{displayid}
+		where author = #{author}
+		order by post_no desc
+	</select>
+	<insert id="createPost" parameterType="PostVO">
+		insert into posts(
+			post_no
+			,author
+			,content
+		) values (
+			post_seq.nextval
+			,#{author}
+			,#{content}
+		)
+	</insert>
+	<delete id="deletePost" parameterType="PostVO">
+		delete from posts
+		where
+			post_no = #{post_no}
+			and author = #{author}
+	</delete>
+	<select id="getSearchTotal" parameterType="String" resultType="int">
+		select count(*) from posts
+		where content like '%' || #{searchKeyword} || '%'
+	</select>
+	<select id="getSearchPosts" parameterType="String" resultType="PostVO">
+		select * from posts
+		where content like '%' || #{searchKeyword} || '%'
+		order by post_no desc
 	</select>
 </mapper>

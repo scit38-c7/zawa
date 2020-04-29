@@ -42,4 +42,58 @@ public class PostDAO {
 		}
 		return list;
 	}
+
+	public boolean createPost(PostVO vo) {
+		boolean result = false;
+		try {
+			PostMapper mapper = sqlSession.getMapper(PostMapper.class);
+			if (mapper.createPost(vo) > 0) {
+				result = true;
+			} else {
+				result = false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public boolean deletePost(PostVO vo) {
+		boolean result = false;
+		try {
+			PostMapper mapper = sqlSession.getMapper(PostMapper.class);
+			if (mapper.deletePost(vo) > 0) {
+				result = true;
+			} else {
+				result = false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public ScrollPageNavigator getSearchNavi(int currentPage, String searchKeyword) {
+		int totalRecordsCount = 0;
+		try {
+			PostMapper mapper = sqlSession.getMapper(PostMapper.class);
+			totalRecordsCount = mapper.getSearchTotal(searchKeyword);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ScrollPageNavigator navi = new ScrollPageNavigator(POSTS_PER_PAGE, currentPage, totalRecordsCount);
+		return navi;
+	}
+
+	public ArrayList<PostVO> getSearchPosts(String searchKeyword, ScrollPageNavigator navi) {
+		ArrayList<PostVO> list = null;
+		RowBounds rb = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
+		try {
+			PostMapper mapper = sqlSession.getMapper(PostMapper.class);
+			list = mapper.getSearchPosts(searchKeyword, rb);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

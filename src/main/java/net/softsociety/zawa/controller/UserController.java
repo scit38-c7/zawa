@@ -124,4 +124,10 @@ public class UserController {
 		httpSession.setAttribute("currentProfile", dao.getProfile(displayid));
 		return "redirect:/user?u=" + displayid;
 	}
+	
+	@RequestMapping(value = "signout", method = RequestMethod.GET)
+	public String signout(HttpSession httpSession) {
+		httpSession.invalidate();
+		return "redirect:/";
+	}
 }
