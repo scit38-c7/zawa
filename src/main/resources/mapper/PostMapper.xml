@@ -37,4 +37,72 @@
 		where content like '%' || #{searchKeyword} || '%'
 		order by post_no desc
 	</select>
+	<select id="getLikeTotal" parameterType="int" resultType="int">
+		select count(*) from likes
+		where post_no = #{post_no}
+	</select>
+	<select id="isLikedByMe" parameterType="LikeVO" resultType="int">
+		select count(*) from likes
+		where
+			post_no = #{post_no}
+			and user_id = #{user_id}
+	</select>
+	<insert id="like" parameterType="LikeVO">
+		insert into likes (
+			user_id
+			,post_no
+		) values (
+			#{user_id}
+			,#{post_no}
+		)
+	</insert>
+	<delete id="unlike" parameterType="LikeVO">
+		delete from likes
+		where
+			user_id = #{user_id}
+			and post_no = #{post_no}
+	</delete>
+	<select id="getCommentTotal" parameterType="int" resultType="int">
+		select count(*) from comments
+		where post_no = #{post_no}
+	</select>
+	<select id="getComments" parameterType="int" resultType="CommentVO">
+		select * from comments
+		where post_no = #{post_no}
+		order by cmt_no asc
+	</select>
+	<insert id="createComment" parameterType="CommentVO">
+		insert into comments (
+			cmt_no
+			,post_no
+			,author
+			,content
+		) values (
+			cmt_seq.nextval
+			,#{post_no}
+			,#{author}
+			,#{content}
+		)
+	</insert>
+	<delete id="deleteComment" parameterType="CommentVO">
+		delete from comments
+		where
+			post_no = #{post_no}
+			and author = #{author}
+	</delete>
+	<select id="getLikesTotal" parameterType="String" resultType="int">
+		select count(*)
+		from likes l, posts p
+		where
+			l.user_id = #{user_id}
+			and p.post_no = l.post_no
+	</select>
+	<select id="getLikedPosts" parameterType="String" resultType="PostVO">
+		select p.*
+		from likes l, posts p
+		where
+			l.user_id = #{user_id}
+			and p.post_no = l.post_no
+		order by rownum desc
+	</select>
 </mapper>

@@ -31,6 +31,8 @@
 
 		$(function () {
 			var id = $('#profile-id').val();
+			var currentProfile = $('#current-profile').val();
+			var pageLoadLock = false;
 
 			// 타임라인 한 "페이지"를 로드
 			function loadTimelinePage() {
@@ -45,23 +47,67 @@
 						var str = '';
 						$.each(data, function (index, item) {
 							str += '<div class="card shadow mb-4 col-12">';
+							str += '<input type="hidden" class="post-no" value="' + item.post.post_no + '">';
 							str += '<div class="card-header py-3 row">';
-							// str += '<h6 class="m-0 font-weight-bold text-primary">@' + item.author + '</h6>';
-							str += '<div class="col mr-2"><h6 class="m-0 font-weight-bold text-primary">@' + item.author + '</h6></div>';
-							str += '<div class="delete-btn col-auto">'
-							str += '<input type="hidden" value="' + item.post_no + '">';
-							str += '<i class="fas fa-trash-alt fa-sm fa-fw text-gray-400"></i></div>';
-							str += '</div>';
-							str += '<div class="card-body">' + item.content + '</div></div>';
+							str += '<div class="col mr-2"><h6 class="m-0 font-weight-bold text-primary">' + item.user.name + ' @' + item.post.author + '</h6></div>';
+							// 삭제 버튼
+							if (item.post.author == currentProfile) {
+								str += '<div class="col-auto"><a class="delete-btn">';
+								str += '<i class="fas fa-trash-alt fa-sm fa-fw text-gray-400"></i></a></div>';
+							}
+							str += '</div>'; // header closed
+							str += '<div class="card-body">' + item.post.content + '<hr>';
+							str += '<div class="row">';
+							// 좋아요 버튼
+							str += '<div class="col"><a class="like-btn">';
+							if (item.liked) {
+								str += '<i class="fas fa-heart fa-sm fa-fw text-danger"></i></a>';
+							} else {
+								str += '<i class="far fa-heart fa-sm fa-fw text-danger"></i></a>';
+							}
+							str += '<span class="like-count text-danger">' + item.likes + '</span></div>';
+							str += '<div class="col-auto">' + item.post.inputdate + '</div></div>';
+							str += '</div></div>';
 						});
 						$('#posts').append(str);
 						deleteFnc();
+						likeFnc();
 						// currentPage를 1 증가
 						currentPage++;
+						pageLoadLock = false;
 					}
 				});
 			}
 			loadTimelinePage();
+
+			function likeFnc() {
+				$(".like-btn").on('click', function () {
+					$this = $(this);
+					var post_no = $this.closest('div.card').find('input.post-no').eq(0).val();
+
+					$.ajax({
+						url: "toggleLike",
+						type: "get",
+						data: {
+							user_id: currentProfile,
+							post_no: post_no
+						},
+						success: function (data) {
+							$this.closest('div').find('span.like-count').eq(0).text(data);
+							if ($this.find('i.far').length > 0) {
+								$this.find('i.far').eq(0).attr('class', 'fas fa-heart fa-sm fa-fw text-danger');
+							} else {
+								$this.find('i.fas').eq(0).attr('class', 'far fa-heart fa-sm fa-fw text-danger');
+							}
+
+						}
+					});
+				});
+
+				$('.like-btn').hover(function () {
+					$(this).css('cursor', 'pointer');
+				});
+			}
 
 			function deleteFnc() {
 				$('.delete-btn').on('click', function () {
@@ -69,7 +115,7 @@
 						// closest(): 선택된 대상으로부터 가장 가까운 부모를 선택하는 함수
 						// find(): 선택된 대상의 후손들을 선택하는 함수
 						// eq(): 지정된 순번에 해당하는 대상을 선택하는 함수
-						var post_no = $(this).find('input').eq(0).val();
+						var post_no = $(this).closest('div.card').find('input.post-no').eq(0).val();
 
 						$.ajax({
 							url: "deletePost",
@@ -86,6 +132,9 @@
 						});
 					}
 				});
+				$('.delete-btn').hover(function () {
+					$(this).css('cursor', 'pointer');
+				});
 			}
 
 			// 일정 부분 이하 스크롤 시 자동 페이징
@@ -94,8 +143,9 @@
 				var scrollHeight = $(window).scrollTop() + $(window).height;
 				var documentHeight = $(document).height();
 
-				if (scrollHeight >= documentHeight - 200) {
-					loadTimelinePage().delay(3000);
+				if (scrollHeight >= documentHeight - 200 && !pageLoadLock) {
+					pageLoadLock = true;
+					loadTimelinePage();
 				}
 			});
 
@@ -131,6 +181,13 @@
 					<span>ホーム</span></a>
 			</li>
 
+			<!-- Likes -->
+			<li class="nav-item">
+				<a class="nav-link" href="<c:url value='/likes' />">
+					<i class="fas fa-fw fa-heart"></i>
+					<span>いいね</span></a>
+			</li>
+
 			<!-- My profiles -->
 			<li class="nav-item">
 				<a class="nav-link" href="<c:url value='/profiles' />">
@@ -154,6 +211,9 @@
 					<i class="fas fa-fw fa-pen"></i>
 					<span>新しいポスト</span></a>
 			</li>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider d-none d-md-block">
 
 		</ul>
 		<!-- End of Sidebar -->
@@ -242,6 +302,7 @@
 				<div class="container-fluid">
 
 					<input type="hidden" id="profile-id" value="${requestScope.viewingUser.displayid}">
+					<input type="hidden" id="current-profile" value="${sessionScope.currentProfile.displayid}">
 
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">

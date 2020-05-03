@@ -10,6 +10,8 @@
 		<typeAlias type="net.softsociety.zawa.vo.AccountVO" alias="AccountVO" />
 		<typeAlias type="net.softsociety.zawa.vo.ProfileVO" alias="ProfileVO" />
 		<typeAlias type="net.softsociety.zawa.vo.PostVO" alias="PostVO" />
+		<typeAlias type="net.softsociety.zawa.vo.LikeVO" alias="LikeVO" />
+		<typeAlias type="net.softsociety.zawa.vo.CommentVO" alias="CommentVO" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/UserMapper.xml" />

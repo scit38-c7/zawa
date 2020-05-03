@@ -13,7 +13,6 @@ public class PostVO {
 	private String author;
 	private String content;
 	private String inputdate;
-	private int like_count;
 	private String originalfilename;
 	private String savedfilename;
 }

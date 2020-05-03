@@ -9,7 +9,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="にぎやかなそーしゃる広場">
-	<title>検索結果 - ZAWA</title>
+	<title>いいね - ZAWA</title>
 
 	<!-- Custom fonts -->
 	<link href="<c:url value='/resources/css/fontawesome-all.min.css' />" rel="stylesheet" type="text/css">
@@ -32,15 +32,14 @@
 		$(function () {
 			var currentProfile = $('#current-profile').val();
 			var pageLoadLock = false;
-			var searchKeyword = $('#search-keyword').val();
 
-			// 검색결과 한 "페이지"를 로드
+			// 타임라인 한 "페이지"를 로드
 			function loadTimelinePage() {
 				$.ajax({
-					url: "readSearchPage",
+					url: "readLikesPage",
 					type: "get",
 					data: {
-						searchKeyword: searchKeyword,
+						id: currentProfile,
 						currentPage: currentPage
 					},
 					success: function (data) {
@@ -212,6 +211,9 @@
 					<span>新しいポスト</span></a>
 			</li>
 
+			<!-- Divider -->
+			<hr class="sidebar-divider d-none d-md-block">
+
 		</ul>
 		<!-- End of Sidebar -->
 
@@ -298,12 +300,11 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 
-					<input type="hidden" id="search-keyword" value="${requestScope.searchKeyword}">
 					<input type="hidden" id="current-profile" value="${sessionScope.currentProfile.displayid}">
 
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">${requestScope.searchKeyword}</h1>
+						<h1 class="h3 mb-0 text-gray-800">いいね</h1>
 					</div>
 
 					<div id="posts" class="row">

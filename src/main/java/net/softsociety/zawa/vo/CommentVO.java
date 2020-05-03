@@ -7,7 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TagVO {
-	private int tag_id;
-	private String tag_name;
+public class CommentVO {
+
+	private int cmt_no;
+	private int post_no;
+	private String author;
+	private String content;
+	private String inputdate;
 }
